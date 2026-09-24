@@ -1,0 +1,42 @@
+{
+  "name": "gamefloat",
+  "version": "0.1.0",
+  "description": "GameFloat (游窗速播) - 游戏攻略悬浮窗",
+  "author": "GameFloat",
+  "license": "MIT",
+  "private": true,
+  "keywords": [
+    "tauri",
+    "tauri-v2",
+    "react",
+    "overlay",
+    "floating-window",
+    "game",
+    "desktop"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "web:dev": "vite",
+    "web:build": "vite build",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "typecheck": "tsc --noEmit",
+    "icons": "node scripts/gen-icon.cjs"
+  },
+  "devDependencies": {
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/cli": "^2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@uiw/react-codemirror": "^4.25.11",
+    "@vitejs/plugin-react": "^5.2.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "typescript": "^7.0.2",
+    "vite": "^7.3.6"
+  }
+}

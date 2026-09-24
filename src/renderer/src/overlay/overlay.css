@@ -1,0 +1,245 @@
+:root {
+  color-scheme: dark;
+  --surface: rgba(44, 44, 46, 0.94);
+  --field: rgba(255, 255, 255, 0.08);
+  --field-hover: rgba(255, 255, 255, 0.14);
+  --line: rgba(255, 255, 255, 0.08);
+  --separator: rgba(255, 255, 255, 0.1);
+  --text: #ffffff;
+  --text-2: #98989d;
+  --accent: #0a84ff;
+  --danger: #ff453a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', system-ui,
+    sans-serif;
+  color: var(--text);
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------- 顶部「三个点」按钮 ---------------- */
+/* 按钮 webview 本身就是按钮的包围盒（尺寸/位置由 Rust 的 UI_PILL_* 决定），
+   这里用 inset:0 填满，尺寸不在 CSS 重复。 */
+.pill {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(23, 24, 29, 0.62);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.28);
+  cursor: grab;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.pill:hover {
+  background: rgba(32, 34, 42, 0.85);
+}
+
+.pill:active {
+  cursor: grabbing;
+}
+
+.pill.active {
+  border-color: rgba(10, 132, 255, 0.85);
+}
+
+.pill .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #cfd3dc;
+  pointer-events: none;
+}
+
+.pill:hover .dot {
+  background: #fff;
+}
+
+/* ---------------- 下拉栏（macOS 菜单样式） ---------------- */
+/* 菜单 webview 铺满整个窗口，这层透明遮罩用于「点空白处关闭」。 */
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+}
+
+/* 展开瞬间用来衔接按钮上的三个点：与按钮同位置，随后淡出。
+   位置/尺寸用 Rust 注入的变量（--gf-pill-*）。 */
+.menu-dots {
+  position: fixed;
+  top: var(--gf-pill-top, 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--gf-pill-w, 64px);
+  height: var(--gf-pill-h, 26px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.menu.expanded .menu-dots {
+  animation: menu-dots-out 320ms ease-out forwards;
+}
+
+@keyframes menu-dots-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.menu-dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #cfd3dc;
+}
+
+/* 收起态 = 展开起点：按钮大小的小胶囊（尺寸来自 Rust 注入的变量）。
+   半径取「按钮高度的一半」，起点正好是胶囊；展开时半径几乎不变。 */
+.menu {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: var(--gf-pill-top, 8px);
+  width: var(--gf-pill-w, 64px);
+  height: var(--gf-pill-h, 26px);
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--gf-pill-h, 26px) / 2);
+  background: var(--surface);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  opacity: 0;
+  /* 淡入与放大同时进行：同一时长、同时起步。 */
+  transition:
+    top 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms ease-out;
+}
+
+.menu.expanded {
+  top: 44px;
+  width: 220px;
+  height: var(--gf-menu-h, 202px);
+  border-radius: 10px;
+  opacity: 1;
+}
+
+/* 内容与容器同步淡入。 */
+.menu > * {
+  opacity: 0;
+  transition: opacity 320ms ease-out;
+}
+
+.menu.expanded > * {
+  opacity: 1;
+}
+
+.menu-address {
+  padding: 2px;
+}
+
+.menu-address input {
+  width: 100%;
+  height: 28px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: var(--field);
+  color: var(--text);
+  font-size: 12px;
+  padding: 0 8px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.menu-address input::placeholder {
+  color: var(--text-2);
+}
+
+.menu-address input:focus {
+  border-color: var(--accent);
+}
+
+.menu-sep {
+  height: 1px;
+  margin: 4px 6px;
+  background: var(--separator);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 28px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+  white-space: nowrap;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.menu-item .mi-icon {
+  flex: 0 0 auto;
+  width: 16px;
+  text-align: center;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1;
+}
+
+.menu-item:hover .mi-icon {
+  color: #fff;
+}
+
+.menu-item.danger .mi-icon {
+  color: var(--danger);
+}
+
+.menu-item.danger:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+.menu-item.danger:hover .mi-icon {
+  color: #fff;
+}

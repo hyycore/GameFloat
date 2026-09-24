@@ -1,0 +1,501 @@
+/* macOS 深色（System Settings 风格） */
+:root {
+  color-scheme: dark;
+  --window: #1e1e1e;
+  --sidebar: #2a2a2c;
+  --group: #2c2c2e;
+  --group-2: #262628;
+  --field: rgba(255, 255, 255, 0.06);
+  --field-hover: rgba(255, 255, 255, 0.1);
+  --separator: rgba(255, 255, 255, 0.08);
+  --text: #ffffff;
+  --text-2: #98989d;
+  --text-3: #636366;
+  --accent: #0a84ff;
+  --danger: #ff453a;
+  --warn: #ffd60a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', system-ui,
+    sans-serif;
+  background: var(--window);
+  color: var(--text);
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-3);
+}
+
+/* ---------------- 布局 ---------------- */
+.app {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar {
+  flex: 0 0 auto;
+  width: 190px;
+  background: var(--sidebar);
+  padding: 14px 10px;
+}
+
+.sidebar-title {
+  padding: 4px 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--window);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px 12px;
+}
+
+.toolbar h1 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status {
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.scroll {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 8px 20px 40px;
+}
+
+/* ---------------- 分组列表 ---------------- */
+.group {
+  background: var(--group);
+  border-radius: 10px;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.group-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+}
+
+.group-title {
+  flex: 1 1 0;
+  min-width: 0;
+  background: transparent;
+  border-color: transparent;
+  padding: 3px 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.group-title:focus {
+  background: var(--field);
+  border-color: transparent;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 38px;
+  padding: 6px 12px;
+  border-top: 1px solid var(--separator);
+}
+
+.row-label {
+  flex: 0 0 116px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.row-control {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.muted {
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+.sub-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px 6px;
+  border-top: 1px solid var(--separator);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* 动作子块 */
+.action {
+  margin: 0 8px 8px;
+  background: var(--group-2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.action .row {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.action .row:first-child {
+  border-top: none;
+}
+
+.action .row-label {
+  flex-basis: 88px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+/* ---------------- 控件 ---------------- */
+input:not([type='radio']),
+textarea {
+  width: 100%;
+  background: var(--field);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--text);
+  padding: 5px 8px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+input:not([type='radio'])::placeholder,
+textarea::placeholder {
+  color: var(--text-3);
+}
+
+input:not([type='radio']):focus,
+textarea:focus {
+  border-color: var(--accent);
+}
+
+textarea {
+  resize: vertical;
+  font-family: 'Consolas', 'Courier New', monospace;
+  line-height: 1.5;
+}
+
+button {
+  height: 24px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 6px;
+  background: var(--field);
+  color: var(--text);
+  font-size: 12px;
+  font-family: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+button:hover {
+  background: var(--field-hover);
+}
+
+button.primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+button.primary:hover {
+  background: #0a7aeb;
+}
+
+button.subtle {
+  background: transparent;
+  color: var(--text-2);
+}
+
+button.subtle:hover {
+  background: var(--field);
+  color: var(--text);
+}
+
+button.danger {
+  color: var(--danger);
+}
+
+button.subtle.danger:hover,
+button.danger:hover {
+  background: rgba(255, 69, 58, 0.14);
+  color: var(--danger);
+}
+
+button.code {
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  text-align: left;
+  background: var(--field);
+  color: var(--text-2);
+}
+
+button.code:hover {
+  background: var(--field-hover);
+  color: var(--text);
+}
+
+button.code.has-code {
+  color: var(--accent);
+}
+
+/* macOS 开关 */
+button.switch {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 22px;
+  padding: 0;
+  border-radius: 11px;
+  background: rgba(120, 120, 128, 0.32);
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+button.switch:hover {
+  background: rgba(120, 120, 128, 0.42);
+}
+
+button.switch.on,
+button.switch.on:hover {
+  background: var(--accent);
+}
+
+button.switch .knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+}
+
+button.switch.on .knob {
+  transform: translateX(16px);
+}
+
+/* ---------------- 侧边栏项 ---------------- */
+.nav-item {
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  text-align: left;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-item.active,
+.nav-item.active:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ---------------- 快捷键录制 ---------------- */
+.hotkey-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hotkey-input > button:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-start;
+  text-align: left;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.hotkey-input button.recording {
+  background: var(--accent);
+  color: #fff;
+}
+
+.hotkey-input button.clear {
+  background: transparent;
+  color: var(--text-3);
+}
+
+.hotkey-input button.clear:hover {
+  background: var(--field);
+  color: var(--text);
+}
+
+.hotkey-error {
+  width: 100%;
+  color: var(--danger);
+  font-size: 12px;
+}
+
+/* ---------------- 添加小窗 ---------------- */
+.add-window {
+  width: 100%;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--group);
+  color: var(--text-2);
+}
+
+.add-window:hover {
+  background: #333335;
+  color: var(--text);
+}
+
+/* ---------------- 提示 / 警告 ---------------- */
+.issues {
+  margin-bottom: 18px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 214, 10, 0.1);
+  color: var(--warn);
+  font-size: 12px;
+}
+
+.issues strong {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.issues ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.issues code {
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+/* ---------------- 代码编辑器弹窗 ---------------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  width: min(680px, 90vw);
+  background: var(--group);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+}
+
+.modal-head h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.modal-head .icon {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  color: var(--text-2);
+}
+
+.modal-head .icon:hover {
+  background: var(--field);
+  color: var(--text);
+}
+
+.modal-body {
+  padding: 0 14px 10px;
+}
+
+.modal-body .cm-editor {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 14px;
+}
