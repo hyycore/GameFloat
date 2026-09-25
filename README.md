@@ -87,6 +87,49 @@ pwsh scripts/build.ps1
 
 窗口移动 / 缩放只更新内存，**保存、导入或退出时**才写盘。
 
+## 示例配置
+
+下面是一个「视频小窗」示例：打开哔哩哔哩，并附带三个可绑定快捷键的 JS 动作（暂停/播放、前进 1 秒、后退 1 秒）。
+
+**用法**：把下面的 JSON 复制到剪贴板，在设置窗口的「配置」页点「从剪贴板导入」即可（导入会先清空当前所有小窗）。里面的动作默认没有快捷键，导入后可在「小窗」页给它们分别录制。
+
+```json
+{
+  "app": "GameFloat",
+  "type": "config",
+  "version": 1,
+  "windows": [
+    {
+      "id": "cf67266d-501b-4b79-a66d-da59a5b40b4d",
+      "name": "视频小窗",
+      "url": "https://www.bilibili.com",
+      "toggleHotkey": "",
+      "bounds": { "x": 99, "y": 140, "width": 1308, "height": 939 },
+      "hotkeys": [
+        {
+          "id": "83d1d709-b5ee-4c00-ba18-fd244688bbb9",
+          "name": "暂停/播放",
+          "hotkey": "",
+          "code": "var video = document.getElementsByTagName(\"video\")[0];\nif (video != null)\n{\n  if (video.paused)\n  {\n    video.play();\n  }\n  else\n  {\n    video.pause();\n  }\n}"
+        },
+        {
+          "id": "a0b4b41a-d2fc-4104-8ae0-f9aed9ec3e81",
+          "name": "前进1s",
+          "hotkey": "",
+          "code": "var video = document.getElementsByTagName(\"video\")[0];\nif (video != null)\n{\n  video.currentTime += 1\n}"
+        },
+        {
+          "id": "6815d961-7751-4a39-86ff-6086a2cefba7",
+          "name": "后退1s",
+          "hotkey": "",
+          "code": "var video = document.getElementsByTagName(\"video\")[0];\nif (video != null)\n{\n  video.currentTime -= 1\n}"
+        }
+      ]
+    }
+  ]
+}
+```
+
 ## 目录结构
 
 ```
